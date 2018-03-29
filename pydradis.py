@@ -545,7 +545,7 @@ class Pydradis:
             for t in tags:
                 taglines+= "#["+t + "]#\r\n"
 
-        data = { 'issue':{'text':'#[Title]#\r\n'+title+'\r\n\r\n#[Description]#\r\n'+str(text)+"\r\n\r\n"+taglines}}
+        data = { 'issue':{'text':'#[Title]#\r\n'+title+'\r\n\r\n'+str(text)+"\r\n\r\n"+taglines}}
 
         #CONTACT DRADIS
         r = self.contactDradis(url,header,"POST","201",json.dumps(data))
