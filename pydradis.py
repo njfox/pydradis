@@ -531,7 +531,7 @@ class Pydradis:
         return result;
 
     #Create Issue on Project 
-    def create_issue(self,pid,title,text,tags=[]):
+    def create_issue(self,pid,text):
 
         #URL
         url = self.__url+self.issue_endpoint
@@ -540,12 +540,7 @@ class Pydradis:
         header = { 'Authorization' : 'Token token="'+self.__apiToken+'"','Dradis-Project-Id': str(pid), 'Content-type': 'application/json'}
 
         #DATA
-        taglines = ""
-        if (len(tags) != 0):
-            for t in tags:
-                taglines+= "#["+t + "]#\r\n"
-
-        data = { 'issue':{'text':'#[Title]#\r\n'+title+'\r\n\r\n'+str(text)+"\r\n\r\n"+taglines}}
+        data = { 'issue':{'text':str(text)+"\r\n\r\n"} }
 
         #CONTACT DRADIS
         r = self.contactDradis(url,header,"POST","201",json.dumps(data))
@@ -557,7 +552,7 @@ class Pydradis:
         return r['id'];
 
     #Update Issue 
-    def update_issue(self,pid,issue_id,title,text,tags=[]):
+    def update_issue(self,pid,issue_id,text):
         
         #URL
         url = self.__url+self.issue_endpoint+"/"+str(issue_id)
@@ -565,13 +560,8 @@ class Pydradis:
         #HEADER
         header = { 'Authorization' : 'Token token="'+self.__apiToken+'"', 'Dradis-Project-Id': str(pid), 'Content-type': 'application/json'}
 
-        #DATA
-        taglines = ""
-        if (len(tags) != 0):
-            for t in tags:
-                taglines+= "#["+t + "]#\r\n"    
-
-        data = { 'issue':{'text':'#[Title]#\r\n'+title+'\r\n\r\n#[Description]#\r\n'+str(text)+"\r\n\r\n"+taglines}}
+        #DATA  
+        data = { 'issue':{'text':str(text)+"\r\n\r\n"} }
 
 
         #CONTACT DRADIS
@@ -673,8 +663,7 @@ class Pydradis:
         return r;
 
     #Create Evidence 
-    def create_evidence(self,pid,node_id,issue_id,title,text,tags=[]):
-
+    def create_evidence(self,pid,node_id,issue_id,text):
         #URL
         url = self.__url+self.evidence_endpoint.replace("<ID>",str(node_id));
 
@@ -682,13 +671,7 @@ class Pydradis:
         header = { 'Authorization' : 'Token token="'+self.__apiToken+'"','Dradis-Project-Id': str(pid), 'Content-type': 'application/json'}
 
         #DATA
-        taglines = ""
-        if (len(tags) != 0):
-            for t in tags:
-                taglines+= "#["+t + "]#\r\n"
-
-        #DATA
-        data = { 'evidence':{'content':'#[Title]#\r\n'+title+'\r\n\r\n#[Description]#\r\n'+str(text)+"\r\n\r\n"+taglines,"issue_id":str(issue_id)}}
+        data = { 'evidence':{'content':str(text)+"\r\n\r\n","issue_id":str(issue_id)} }
 
         #CONTACT DRADIS
         r = self.contactDradis(url,header,"POST","201",json.dumps(data))
@@ -700,7 +683,7 @@ class Pydradis:
         return r['id'];
 
     #Update Evidence 
-    def update_evidence(self,pid,node_id,issue_id,evidence_id,title,text,tags=[]):
+    def update_evidence(self,pid,node_id,issue_id,evidence_id,text):
 
         #URL
         url = self.__url+self.evidence_endpoint.replace("<ID>",str(node_id))+"/"+str(evidence_id);
@@ -709,12 +692,7 @@ class Pydradis:
         header = { 'Authorization' : 'Token token="'+self.__apiToken+'"','Dradis-Project-Id': str(pid), 'Content-type': 'application/json'}
 
         #DATA
-        taglines = ""
-        if (len(tags) != 0):
-            for t in tags:
-                taglines+= "#["+t + "]#\r\n"
-
-        data = { 'evidence':{'content':'#[Title]#\r\n'+title+'\r\n\r\n#[Description]#\r\n'+str(text)+"\r\n\r\n"+taglines,"issue_id":str(issue_id)}}
+        data = { 'evidence':{'content':str(text)+"\r\n\r\n","issue_id":str(issue_id)} }
         
         #CONTACT DRADIS
         r = self.contactDradis(url,header,"PUT","200",json.dumps(data))
@@ -821,7 +799,7 @@ class Pydradis:
         return result;
 
     #Create a note on a project 
-    def create_note(self,pid,node_id,title,text,tags=[],category=0):
+    def create_note(self,pid,node_id,text,category=0):
         
         #URL
         url = self.__url+self.note_endpoint.replace("<ID>",str(node_id));
@@ -830,12 +808,7 @@ class Pydradis:
         header = { 'Authorization' : 'Token token="'+self.__apiToken+'"','Dradis-Project-Id': str(pid), 'Content-type': 'application/json'}
 
         #DATA
-        taglines = ""
-        if (len(tags) != 0):
-            for t in tags:
-                taglines+= "#["+t + "]#\r\n"
-
-        data = { 'note':{'text':'#[Title]#\r\n'+title+'\r\n\r\n#[Description]#\r\n'+str(text)+"\r\n\r\n"+taglines,"category_id":str(category)}}
+        data = { 'note':{'text':str(text)+"\r\n\r\n","category_id":str(category)} }
 
         #CONTACT DRADIS
         r = self.contactDradis(url,header,"POST","201",json.dumps(data))
@@ -847,7 +820,7 @@ class Pydradis:
         return r['id'];
 
     #Update Note 
-    def update_note(self,pid,node_id,note_id,title,text,tags=[],category=1):
+    def update_note(self,pid,node_id,note_id,text,category=1):
 
         #URL
         url = self.__url+self.note_endpoint.replace("<ID>",str(node_id))+"/"+str(note_id);
@@ -856,12 +829,7 @@ class Pydradis:
         header = { 'Authorization' : 'Token token="'+self.__apiToken+'"','Dradis-Project-Id': str(pid), 'Content-type': 'application/json'}
 
         #DATA
-        taglines = ""
-        if (len(tags) != 0):
-            for t in tags:
-                taglines+= "#["+t + "]#\r\n"
-
-        data = { 'note':{'text':'#[Title]#\r\n'+title+'\r\n\r\n#[Description]#\r\n'+str(text)+"\r\n\r\n"+taglines,"category_id":str(category)}}
+        data = { 'note':{'text':str(text)+"\r\n\r\n","category_id":str(category)} }
 
         #CONTACT DRADIS
         r = self.contactDradis(url,header,"PUT","200",json.dumps(data))
@@ -1052,10 +1020,4 @@ class Pydradis:
             return None;
 
         return True;
-
-
-
-
-
-
 
