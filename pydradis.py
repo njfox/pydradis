@@ -366,7 +366,7 @@ class Pydradis:
 
         result = [];
         for i in range(0,len(r)):
-            result += [[r[i]["label"],r[i]["id"]]]
+            result += [[r[i]["label"],r[i]["id"],r[i]["evidence"]]]
 
         return result;
 
@@ -526,7 +526,7 @@ class Pydradis:
 
         result = [];
         for i in range(0,len(r)):
-            result += [[r[i]["title"],r[i]["id"]]]
+            result += [[r[i]["title"],r[i]["id"],r[i]["fields"],r[i]["text"]]]
 
         return result;
 
@@ -692,7 +692,7 @@ class Pydradis:
         header = { 'Authorization' : 'Token token="'+self.__apiToken+'"','Dradis-Project-Id': str(pid), 'Content-type': 'application/json'}
 
         #DATA
-        data = { 'evidence':{'content':str(text)+"\r\n\r\n","issue_id":str(issue_id)} }
+        data = { 'evidence':{'content':str(text),"issue_id":str(issue_id)} }
         
         #CONTACT DRADIS
         r = self.contactDradis(url,header,"PUT","200",json.dumps(data))
