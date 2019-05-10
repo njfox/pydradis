@@ -366,7 +366,7 @@ class Pydradis:
 
         result = [];
         for i in range(0,len(r)):
-            result += [[r[i]["label"],r[i]["id"],r[i]["evidence"]]]
+            result += [[r[i]["label"],r[i]["id"],r[i]["evidence"],r[i]["notes"]]]
 
         return result;
 
